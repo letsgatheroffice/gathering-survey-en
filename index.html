@@ -1,0 +1,32 @@
+!DOCTYPE html>                                                                                                            
+  <html>                                                                                                                     
+  <head>          
+    <meta charset="UTF-8">                                                                                                   
+    <title>Loading survey...</title>
+  </head>                                                                                                                    
+  <body>          
+    <p>Loading survey, please wait...</p>                                                                         
+    <script>                                                                                                                 
+      var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxZDK1-GNw1-ZFzLjBUtMWYaQD-rx-ikfObO5_W6JIIJV06wUHINypYdonCcRAp5fEJoA/exec';
+      var FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdrabeXac_N8YhiuIZbwH7lfX_1xXoMdzQ8apF3ErB2Q_jM6w/viewform';                                                                          
+                                                                                                                             
+      fetch('https://ipapi.co/json/')                                                                                        
+        .then(function(r) { return r.json(); })                                                                              
+        .then(function(geo) {                                                                                                
+          fetch(WEBAPP_URL + '?ip=' + encodeURIComponent(geo.ip || '') +
+            '&country=' + encodeURIComponent(geo.country_name || '') +                                                       
+            '&region=' + encodeURIComponent(geo.region || '') +                                                              
+            '&city=' + encodeURIComponent(geo.city || '') +                                                                  
+            '&lat=' + encodeURIComponent(geo.latitude || '') +                                                               
+            '&lon=' + encodeURIComponent(geo.longitude || ''),                                                               
+            { mode: 'no-cors' }
+          ).finally(function() {                                                                                             
+            window.location.href = FORM_URL;
+          });                                                                                                                
+        })        
+        .catch(function() {
+          window.location.href = FORM_URL;
+        });                                                                                                                  
+    </script>
+  </body>                                                                                                                    
+  </html>     
